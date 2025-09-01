@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ficha Médica - Registro</title>
+  <style>
+    :root{--bg1:#001a3c; 
+      --bg2:#002f6c; 
+      --card:#0d1b2a;
+      --muted:#9aa3af;
+      --accent:#E30613; /* rojo AIEP */
+      --secondary:#004080; /* azul institucional */
+      --danger:#ef4444;}
+    *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    body{ margin:0;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#f1f5f9;
+      position:relative;
+      min-height:100vh;}
+        body::before{
+      content:"";
+      position:fixed;
+      top:50%;
+      left:50%;
+      width:400px;
+      height:400px;
+      background:url('logo_aiep.png') no-repeat center center;
+      background-size:contain;
+      opacity:0.07;
+      transform:translate(-50%,-50%);
+      z-index:0;
+      pointer-events:none;
+    }
+    header{padding:24px 16px;text-align:center;position:relative;z-index:1}
+    header h1{margin:0;font-size:clamp(22px,4vw,32px);color:var(--accent)}
+    header p{margin:8px 0 0;color:#cbd5e1}
+    main{display:grid;grid-template-columns:1fr;gap:16px;max-width:1000px;margin:0 auto;padding:16px;position:relative;z-index:1}
+    .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    .card h2{margin:0 0 8px 0;font-size:18px;color:var(--secondary)}
+    .card .body{padding:16px}
+    form{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    label{font-size:13px;color:#e2e8f0;display:block;margin-bottom:6px}
+    input,select,textarea{
+      width:100%;padding:10px;border-radius:10px;
+      border:1px solid #334155;background:#0b1220;color:#f1f5f9
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:none;border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(227,6,19,.4)
+    }
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-8{grid-column:span 8}
+    .col-12{grid-column:span 12}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    button{border:0;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+    .primary{background:var(--accent);color:#fff}
+    .muted{background:var(--secondary);color:#fff}
+    .danger{background:var(--danger);color:#fff}
+    small.help{color:var(--muted);font-size:12px}
+    .error{color:var(--danger);font-size:12px;margin-top:6px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #1f2937;text-align:left;font-size:14px}
+    th{background:#002a5c;color:#fff}
+    @media (max-width:768px){
+      .col-6,.col-4,.col-8,.col-12{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ficha Médica – Formulario de Ingreso</h1>
+    <p>Grupo 19 · Calidad y Testing · AIEP</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="body">
+        <h2>Registro / Edición</h2>
+        <form id="formPaciente" novalidate>
+          <div class="col-6">
+            <label for="rut">RUT *</label>
+            <input id="rut" name="rut" placeholder="12.345.678-5" required />
+            <small class="help">Se valida dígito verificador.</small>
+            <div class="error" data-error-for="rut"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="telefono">Teléfono *</label>
+            <input id="telefono" name="telefono" placeholder="+56 9 1234 5678" required />
+            <div class="error" data-error-for="telefono"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="nombres">Nombres *</label>
+            <input id="nombres" name="nombres" placeholder="Nombre(s)" required />
+            <div class="error" data-error-for="nombres"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="apellidos">Apellidos *</label>
+            <input id="apellidos" name="apellidos" placeholder="Apellido(s)" required />
+            <div class="error" data-error-for="apellidos"></div>
+          </div>
+
+          <div class="col-8">
+            <label for="direccion">Dirección *</label>
+            <input id="direccion" name="direccion" placeholder="Calle, número, depto" required />
+            <div class="error" data-error-for="direccion"></div>
+          </div>
+
+          <div class="col-4">
+            <label for="ciudad">Ciudad *</label>
+            <input id="ciudad" name="ciudad" placeholder="Ciudad" required />
+            <div class="error" data-error-for="ciudad"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" placeholder="correo@dominio.cl" required />
+            <div class="error" data-error-for="email"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+            <input id="fechaNacimiento" name="fechaNacimiento" type="date" required />
+            <div class="error" data-error-for="fechaNacimiento"></div>
+          </div>
+
+          <div class="col-6">
+            <label for="estadoCivil">Estado civil *</label>
+            <select id="estadoCivil" name="estadoCivil" required>
+              <option value="">Selecciona…</option>
+              <option value="soltero">Soltero/a</option>
+              <option value="casado">Casado/a</option>
+              <option value="conviviente">Conviviente</option>
+              <option value="separado">Separado/a</option>
+              <option value="divorciado">Divorciado/a</option>
+              <option value="viudo">Viudo/a</option>
+            </select>
+            <div class="error" data-error-for="estadoCivil"></div>
+          </div>
+
+          <div class="col-12">
+            <label for="comentarios">Comentarios</label>
+            <textarea id="comentarios" name="comentarios" rows="3" placeholder="Notas adicionales…"></textarea>
+          </div>
+
+          <div class="col-12 row">
+            <button type="submit" class="primary">Guardar</button>
+            <button type="button" id="btnLimpiar" class="muted">Limpiar</button>
+            <button type="button" id="btnCerrar" class="danger">Cerrar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="body">
+        <h2>Búsqueda por Apellido</h2>
+        <div class="row" style="margin-bottom:10px">
+          <input id="filtroApellido" placeholder="Escribe un apellido…" style="flex:1"/>
+          <button id="btnBuscar" class="muted">Buscar</button>
+          <button id="btnVerTodos" class="muted">Ver todos</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>RUT</th><th>Nombres</th><th>Apellidos</th><th>Ciudad</th><th>Teléfono</th><th>Email</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyResultados">
+              <tr><td colspan="7" style="color:#9aa3af">Sin resultados…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+<script>
+  // --- Validación de solo letras ---
+function soloLetras(input) {
+  input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+}
+// -------- Utilidades --------
+function normalizaRut(rut){
+  return rut.replace(/\.|-/g,'').toUpperCase();
+}
+function formateaRut(rut){
+  rut = normalizaRut(rut);
+  if(!rut) return '';
+  const cuerpo = rut.slice(0, -1);
+  const dv = rut.slice(-1);
+  let r = '', i = 0;
+  for(let j=cuerpo.length-1; j>=0; j--){
+    r = cuerpo[j] + r;
+    i++;
+    if(i===3 && j!==0){ r = '.' + r; i = 0; }
+  }
+  return r + '-' + dv;
+}
+function validaRut(rut){
+  rut = normalizaRut(rut);
+  if(!/^[0-9]+[0-9K]$/.test(rut)) return false;
+  const cuerpo = rut.slice(0,-1);
+  const dv = rut.slice(-1);
+  let suma = 0, multiplo = 2;
+  for(let i=cuerpo.length-1; i>=0; i--){
+    suma += parseInt(cuerpo[i]) * multiplo;
+    multiplo = multiplo === 7 ? 2 : multiplo + 1;
+  }
+  const dvCalc = 11 - (suma % 11);
+  const dvChar = dvCalc === 11 ? '0' : (dvCalc === 10 ? 'K' : String(dvCalc));
+  return dvChar === dv;
+}
+function validaEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+function validaTelefono(fono){
+  return /^\+?\d[\d\s]{7,15}$/.test(fono);
+}
+function hoyISO(){ return new Date().toISOString().slice(0,10); }
+
+// -------- Persistencia --------
+const KEY = 'ficha_medica.pacientes'; // map rut->obj
+function loadDb(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(_){ return {}; }
+}
+function saveDb(db){ localStorage.setItem(KEY, JSON.stringify(db)); }
+function upsertPaciente(p){
+  const db = loadDb();
+  const id = normalizaRut(p.rut);
+  const exists = !!db[id];
+  db[id] = p;
+  saveDb(db);
+  return exists;
+}
+function buscarPorApellido(apellido){
+  const db = loadDb();
+  const needle = (apellido||'').trim().toLowerCase();
+  return Object.values(db).filter(p => p.apellidos.toLowerCase().includes(needle));
+}
+function getAll(){ return Object.values(loadDb()); }
+function getByRut(rut){
+  const db = loadDb();
+  return db[normalizaRut(rut)] || null;
+}
+function removeByRut(rut){
+  const db = loadDb();
+  delete db[normalizaRut(rut)];
+  saveDb(db);
+}
+
+// -------- UI & Validaciones --------
+const form = document.getElementById('formPaciente');
+const errors = {};
+function setError(name, msg){
+  errors[name] = msg;
+  const el = document.querySelector(`[data-error-for="${name}"]`);
+  if(el){ el.textContent = msg || ''; }
+}
+function clearErrors(){ Object.keys(errors).forEach(k=>setError(k,'')); }
+
+function getFormData(){
+  return {
+    rut: formateaRut(document.getElementById('rut').value.trim()),
+    nombres: document.getElementById('nombres').value.trim(),
+    apellidos: document.getElementById('apellidos').value.trim(),
+    direccion: document.getElementById('direccion').value.trim(),
+    ciudad: document.getElementById('ciudad').value.trim(),
+    telefono: document.getElementById('telefono').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    fechaNacimiento: document.getElementById('fechaNacimiento').value,
+    estadoCivil: document.getElementById('estadoCivil').value,
+    comentarios: document.getElementById('comentarios').value.trim(),
+    actualizadoEn: new Date().toISOString()
+  };
+}
+function validate(p){
+  let ok = true;
+  clearErrors();
+  if(!validaRut(p.rut)){ setError('rut','RUT inválido.'); ok=false; }
+  if(!p.nombres){ setError('nombres','Requerido.'); ok=false; }
+  if(!p.apellidos){ setError('apellidos','Requerido.'); ok=false; }
+  if(!p.direccion){ setError('direccion','Requerido.'); ok=false; }
+  if(!p.ciudad){ setError('ciudad','Requerido.'); ok=false; }
+  if(!validaTelefono(p.telefono)){ setError('telefono','Formato inválido.'); ok=false; }
+  if(!validaEmail(p.email)){ setError('email','Email inválido.'); ok=false; }
+  if(!p.fechaNacimiento){ setError('fechaNacimiento','Requerido.'); ok=false; }
+  if(p.fechaNacimiento > hoyISO()){ setError('fechaNacimiento','No puede ser futura.'); ok=false; }
+  if(!p.estadoCivil){ setError('estadoCivil','Selecciona una opción.'); ok=false; }
+  return ok;
+}
+function fillForm(p){
+  document.getElementById('rut').value = p.rut;
+  document.getElementById('nombres').value = p.nombres;
+  document.getElementById('apellidos').value = p.apellidos;
+  document.getElementById('direccion').value = p.direccion;
+  document.getElementById('ciudad').value = p.ciudad;
+  document.getElementById('telefono').value = p.telefono;
+  document.getElementById('email').value = p.email;
+  document.getElementById('fechaNacimiento').value = p.fechaNacimiento;
+  document.getElementById('estadoCivil').value = p.estadoCivil;
+  document.getElementById('comentarios').value = p.comentarios || '';
+}
+
+function renderTabla(list){
+  const tbody = document.getElementById('tbodyResultados');
+  tbody.innerHTML = '';
+  if(list.length===0){
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 7; td.style.color = '#9aa3af'; td.textContent='Sin resultados…';
+    tr.appendChild(td); tbody.appendChild(tr); return;
+  }
+  list.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${p.rut}</td>
+      <td>${p.nombres}</td>
+      <td>${p.apellidos}</td>
+      <td>${p.ciudad}</td>
+      <td>${p.telefono}</td>
+      <td>${p.email}</td>
+      <td class="row">
+        <button class="muted" data-act="cargar" data-rut="${p.rut}">Cargar</button>
+        <button class="danger" data-act="eliminar" data-rut="${p.rut}">Eliminar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('btnBuscar').addEventListener('click', () => {
+  const term = document.getElementById('filtroApellido').value;
+  renderTabla(buscarPorApellido(term));
+});
+document.getElementById('btnVerTodos').addEventListener('click', () => renderTabla(getAll()));
+
+document.getElementById('tbodyResultados').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const rut = btn.getAttribute('data-rut');
+  if(btn.getAttribute('data-act')==='cargar'){
+    const p = getByRut(rut);
+    if(p) fillForm(p);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  if(btn.getAttribute('data-act')==='eliminar'){
+    if(confirm('¿Eliminar registro permanentemente?')){
+      removeByRut(rut);
+      renderTabla(getAll());
+      alert('Eliminado.');
+    }
+  }
+});
+
+form.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const p = getFormData();
+  if(!validate(p)) return;
+  const exists = getByRut(p.rut);
+  if(exists){
+    const ok = confirm('El RUT ya existe. ¿Deseas sobrescribir el registro?');
+    if(!ok) return;
+  }
+  const wasExisting = upsertPaciente(p);
+  alert(wasExisting ? 'Registro actualizado.' : 'Registro guardado.');
+  renderTabla(getAll());
+});
+
+document.getElementById('btnLimpiar').addEventListener('click', ()=>{
+  form.reset(); clearErrors();
+});
+document.getElementById('btnCerrar').addEventListener('click', ()=>{
+  // Para web: cerrar pestaña si fue abierta por script, o notificar.
+  if(window.close){ window.close(); }
+  alert('Puedes cerrar la pestaña manualmente.');
+});
+
+// Estado inicial
+renderTabla(getAll());
+</script>
+</body>
+</html>
